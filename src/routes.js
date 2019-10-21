@@ -1,9 +1,8 @@
 import { Router } from 'express';
+import StudentController from './app/controller/StudentController';
 
 const routes = new Router();
 
-routes.post('/root', (req, res) => {
-  res.send({ ok: true });
-});
+routes.post('/cadastro', StudentController.store);
 
 export default routes;
