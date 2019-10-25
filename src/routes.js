@@ -8,5 +8,6 @@ const routes = new Router();
 routes.post('/session', SessionController.store);
 routes.use(authMiddleware);
 routes.post('/cadastro', StudentController.store);
+routes.put('/update', StudentController.update);
 
 export default routes;
