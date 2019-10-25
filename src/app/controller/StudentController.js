@@ -29,6 +29,22 @@ class StudentController {
 
     return res.status(200).json(student);
   }
+
+  async update(req, res) {
+    const { student_id: student } = req.query;
+
+    const existId = await Student.findByPk(student);
+
+    if (!existId) {
+      return res
+        .status(400)
+        .json({ erro: 'Esse estudante nao esta cadastrodo' });
+    }
+
+    const studentUpdate = await existId.update(req.body);
+
+    return res.json(studentUpdate);
+  }
 }
 
 export default new StudentController();
