@@ -16,8 +16,10 @@ class SessionController {
       return res.status(401).json({ erro: 'User não encontrado' });
     }
     if (!(await user.checkPassword(password))) {
-      return res.status(401).json({ erro: 'As informações nao conferem' });
+      return res.status(401).json({ erro: 'As informações não conferem' });
     }
+
+    // gera token para usuario de DB users
 
     const { id, name } = user;
 
