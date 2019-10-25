@@ -1,9 +1,25 @@
+import * as Yup from 'yup';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import authConfig from '../../config/authConfig';
 
 class SessionController {
   async store(req, res) {
+    const schema = Yup.object().shape({
+      email: Yup.string()
+        .email()
+        .required(),
+      password: Yup.string()
+        .required()
+        .min(6),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res
+        .status(400)
+        .json({ erro: 'Campos invalidos, verifique e tente novamente' });
+    }
+
     const { password, email } = req.body;
 
     const user = await User.findOne({

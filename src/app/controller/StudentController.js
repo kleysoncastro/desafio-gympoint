@@ -1,8 +1,25 @@
+import * as Yup from 'yup';
 import Student from '../models/Student';
 import User from '../models/User';
 
 class StudentController {
   async store(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string()
+        .email()
+        .required(),
+      idade: Yup.date(),
+      peso: Yup.number(),
+      altura: Yup.number(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res
+        .status(400)
+        .json({ erro: 'Campos invalidos, verifique e tente novamente' });
+    }
+
     const { email } = req.body;
     const userAdmin = await User.findOne({ where: { email } });
     const userStudent = await Student.findOne({
@@ -31,6 +48,20 @@ class StudentController {
   }
 
   async update(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string(),
+      email: Yup.string().email(),
+      idade: Yup.date(),
+      peso: Yup.number(),
+      altura: Yup.number(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res
+        .status(400)
+        .json({ erro: 'Campos invalidos, verifique e tente novamente' });
+    }
+
     const { student_id: student } = req.query;
 
     const existId = await Student.findByPk(student);
