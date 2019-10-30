@@ -1,4 +1,4 @@
-import Planos from '../models/Planos';
+import Planos from '../models/Plano';
 
 class PlanoController {
   async store(req, res) {
