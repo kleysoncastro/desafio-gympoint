@@ -10,14 +10,14 @@ class PlanoController {
       return res.status(400).json({ erro: 'Este plano ja existe' });
     }
 
-    const cadastroPlano = await Planos.create(req.body);
+    await Planos.create(req.body);
 
     return res.status(200).json({ title, duration, price });
   }
 
   async index(req, res) {
-    const teste = await Planos.findAll();
-    return res.json(teste);
+    const listPlanos = await Planos.findAll();
+    return res.status(200).json(listPlanos);
   }
 
   async update(req, res) {
@@ -35,7 +35,18 @@ class PlanoController {
   }
 
   async delete(req, res) {
-    res.json({ msg: true });
+    const { active } = req.query;
+    const { id } = req.params;
+    const findPlanos = await Planos.findByPk(id);
+
+    if (!findPlanos) {
+      return res.status(400).json({ erro: 'Plano não encontrado' });
+    }
+
+    findPlanos.active = active;
+    await findPlanos.save();
+
+    return res.json(findPlanos);
   }
 }
 

@@ -10,9 +10,9 @@ routes.post('/session', SessionController.store);
 routes.use(authMiddleware);
 routes.post('/cadastro', StudentController.store);
 routes.put('/update', StudentController.update);
-routes.post('/planos', PlanoController.store);
-routes.get('/list-planos/:id', PlanoController.index);
-routes.put('/update-planos', PlanoController.update);
-routes.delete('/delete-planos', PlanoController.delete);
+routes.post('/create-planos', PlanoController.store);
+routes.get('/list-planos/', PlanoController.index);
+routes.put('/update-planos/', PlanoController.update);
+routes.delete('/delete/:id/planos/', PlanoController.delete);
 
 export default routes;
