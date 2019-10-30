@@ -16,7 +16,7 @@ class PlanoController {
   }
 
   async index(req, res) {
-    const listPlanos = await Planos.findAll();
+    const listPlanos = await Planos.findAll({ where: { active: true } });
     return res.status(200).json(listPlanos);
   }
 
