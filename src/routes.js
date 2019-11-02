@@ -4,8 +4,12 @@ import StudentController from './app/controller/StudentController';
 import SessionController from './app/controller/SessionController';
 import PlanoController from './app/controller/PlanoController';
 import Matriculacontroller from './app/controller/MatriculaController';
+import CheckinController from './app/controller/CheckinController';
 
 const routes = new Router();
+
+// checkin
+routes.post('/students/:id/checkins', CheckinController.store);
 
 routes.post('/session', SessionController.store);
 routes.use(authMiddleware);
@@ -16,6 +20,5 @@ routes.get('/list-planos/', PlanoController.index);
 routes.put('/update-planos/', PlanoController.update);
 routes.delete('/delete/:id/planos/', PlanoController.delete);
 routes.post('/matricula', Matriculacontroller.store);
-
 
 export default routes;

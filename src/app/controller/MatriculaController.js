@@ -1,6 +1,14 @@
+/*
+ * class para matricular aluno em um determinado
+ * plano existente,
+ * quano cadastro bem sucedido, veeculua estudante na table
+ * checkins usando student_id como chave relacão.
+ */
+
 import Matricula from '../models/Matricula';
 import Plano from '../models/Plano';
 import Student from '../models/Student';
+import Checkin from '../models/Checkin';
 
 class MatriculaController {
   async store(req, res) {
@@ -19,12 +27,14 @@ class MatriculaController {
     const { duration, price } = exiPlan;
 
     const priceFinal = (Number(duration) / 30) * Number(price);
-    console.log(priceFinal);
+
     const mantricula = await Matricula.create({
       student_id: student,
       plan_id: plan,
       price: priceFinal,
     });
+
+    const ativaCheckin = await Checkin.create({ student_id: student });
 
     return res.status(200).json(mantricula);
   }
